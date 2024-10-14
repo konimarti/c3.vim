@@ -43,7 +43,7 @@ syntax keyword c3Var var
 syntax keyword c3Void void 
 syntax keyword c3While while 
 
-syntax keyword c4DataType float double char bool byte short ushort int uint long ulong isz usz iptr uptr int128 uint128 float16 float128 typeid any anyfault
+syntax keyword c3DataType float double char bool byte short ushort int uint long ulong isz usz iptr uptr int128 uint128 float16 float128 typeid any anyfault
 syntax keyword c3Bool true false
 syntax keyword c3Null null
 
@@ -91,16 +91,12 @@ highlight link c3Asm Keyword
 highlight link c3Assert Keyword
 highlight link c3Attribute Keyword
 highlight link c3Break Keyword
-highlight link c3Case Keyword
-highlight link c3Catch Keyword
 highlight link c3Const Keyword
 highlight link c3Continue Keyword
-highlight link c3Default Keyword
 highlight link c3Def Keyword
 highlight link c3Defer Keyword
 highlight link c3Define Keyword
 highlight link c3Distinct Keyword
-highlight link c3Do Keyword
 highlight link c3Extern Keyword
 highlight link c3Fn Keyword
 highlight link c3Import Keyword
@@ -111,12 +107,9 @@ highlight link c3Module Keyword
 highlight link c3Nextcase Keyword
 highlight link c3Return Keyword
 highlight link c3Static Keyword
-highlight link c3Switch Keyword
 highlight link c3Tlocal Keyword
-highlight link c3Try Keyword
-highlight link c3Var Keyword
+highlight link c3Var Keywor
 highlight link c3Void Keyword
-highlight link c3While Keyword
 
 highlight link c3AddressOf Operator
 highlight link c3Deref Operator
@@ -136,16 +129,26 @@ highlight link c3Fault Structure
 highlight link c3Union Structure
 highlight link c3Bitstruct Structure
 
-" :FunctionHighlighting
 highlight link c3FunctionDecl Function
 highlight link c3FunctionCall Function
 
 highlight link c3Macro Macro
+
 highlight link c3If Conditional
 highlight link c3Else Conditional
+highlight link c3Switch Conditional
+
+highlight link c3Case Label
+highlight link c3Default Label
+
+highlight link c3Catch Exception
+highlight link c3Try Exception
+
 highlight link c3For Repeat
 highlight link c3Foreach Repeat
 highlight link c3Foreachr Repeat
+highlight link c3While Repeat
+highlight link c3Do Repeat
 
 highlight link c3LineComment Comment
 highlight link c3BlockComment Comment
@@ -159,9 +162,10 @@ highlight link c3FixMe Todo
 highlight link c3NoCheckin Todo
 highlight link c3Hack Todo
 
-highlight link c3Template Constant
+highlight link c3Template PreProc
 
 highlight link c3TagNote Identifier
+
 highlight link c3DataType Type
 highlight link c3Bool Boolean
 highlight link c3Constant Constant
