@@ -85,7 +85,7 @@ syntax match c3Template "$\<\w\+\>"
 syntax match c3CommentNote "@\<\w\+\>" contained display
 syntax region c3LineComment start=/\/\// end=/$/  contains=c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
 syntax region c3BlockComment start=/\v\/\*/ end=/\v\*\// contains=c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
-syntax region c3DocComment start=/\v\<\*/ end=/\v\*\>/ contains=c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
+syntax region c3DocComment start=/\v\<\*(\>)@!/ end=/\v\*\>/ contains=c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
 
 highlight link c3Asm Keyword
 highlight link c3Assert Keyword
