@@ -54,7 +54,7 @@ syntax match c3FixMe "FIXME"
 syntax match c3Hack "HACK"
 
 syntax region c3RawString start=+`+ end=+`+
-syntax region c3HexString start=+x"+ end=+"+
+syntax region c3HexString start=+x"+ end=+"+ start=+x`+ end=+`+
 syntax region c3Char start=+'+ skip=+\\\\\|\\'+ end=+'+
 syntax region c3String start=+"+ skip=+\\\\\|\\'+ end=+"+ contains=c3Escape
 syntax match c3Escape display contained /\\\([nrtabe0\\'"]\|x\x\{2}\)/
@@ -85,7 +85,7 @@ syntax match c3Template "$\<\w\+\>"
 syntax match c3CommentNote "@\<\w\+\>" contained display
 syntax region c3LineComment start=/\/\// end=/$/  contains=c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
 syntax region c3BlockComment start=/\v\/\*/ end=/\v\*\// contains=c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
-syntax region c3DocComment start=/\v\<\*(\>)@!/ end=/\v\*\>/ contains=c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
+syntax region c3Contract start=/\v\<\*(\>)@!/ end=/\v\*\>/ contains=c3TagNote, c3BlockComment, c3CommentNote, c3Todo, c3Note, c3XXX, c3FixMe, c3NoCheckin, c3Hack
 
 highlight link c3Asm Keyword
 highlight link c3Assert Keyword
@@ -152,7 +152,7 @@ highlight link c3Do Repeat
 
 highlight link c3LineComment Comment
 highlight link c3BlockComment Comment
-highlight link c3DocComment Comment
+highlight link c3Contract Comment
 highlight link c3CommentNote Todo
 
 highlight link c3Todo Todo
