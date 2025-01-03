@@ -28,6 +28,7 @@ syntax keyword c3Fn fn
 syntax keyword c3If if
 syntax keyword c3Import import
 syntax keyword c3Inline inline
+syntax keyword c3Interface interface
 syntax keyword c3Local local
 syntax keyword c3Macro macro 
 syntax keyword c3Module module 
@@ -123,6 +124,7 @@ highlight link c3HexString String
 highlight link c3RawString String
 highlight link c3Char String
 
+highlight link c3Interface Structure
 highlight link c3Struct Structure
 highlight link c3Enum Structure
 highlight link c3Fault Structure
