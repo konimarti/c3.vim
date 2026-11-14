@@ -71,6 +71,28 @@ let g:c3_vet_command = 'c3vet'
 let g:c3_vet_options = '--disable=float-equal'
 ```
 
+### Key Mappings
+
+Buffer-local mappings are enabled by default:
+
+| Mapping           | Action                     |
+| ----------------- | --------------------------- |
+| `<LocalLeader>cf` | Run `:C3Format`             |
+| `<LocalLeader>cv` | Run `:C3Vet`                 |
+
+They are defined via `<Plug>` mappings, so you can rebind them in your `.vimrc`:
+
+```vim
+autocmd FileType c3 nmap <buffer> <F3> <Plug>(c3-format)
+autocmd FileType c3 nmap <buffer> <F4> <Plug>(c3-vet)
+```
+
+If you map `<Plug>(c3-format)` or `<Plug>(c3-vet)` yourself, the corresponding default `<LocalLeader>` mapping is skipped automatically. To disable the default mappings entirely:
+
+```vim
+let g:c3_no_mappings = 1
+```
+
 ### Compiler Settings (`:make`)
 
 The compiler plugin is automatically set to `c3c`. Running `:make` builds `project.json` if present (`c3c build`), or compiles the current file (`c3c compile %`).

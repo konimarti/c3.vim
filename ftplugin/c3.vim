@@ -42,7 +42,24 @@ else
   silent! autocmd! C3FormatOnSave * <buffer>
 endif
 
-let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! delcommand C3Vet | silent! autocmd! C3FormatOnSave * <buffer>"
+" Key mappings, remap via <Plug>(c3-format)/<Plug>(c3-vet) or disable defaults
+" with let g:c3_no_mappings = 1
+nnoremap <buffer> <silent> <Plug>(c3-format) :C3Format<CR>
+nnoremap <buffer> <silent> <Plug>(c3-vet) :C3Vet<CR>
+
+let s:mapundo = ''
+if !get(g:, 'c3_no_mappings', 0)
+  if !hasmapto('<Plug>(c3-format)', 'n')
+    nmap <buffer> <silent> <LocalLeader>cf <Plug>(c3-format)
+    let s:mapundo .= ' | silent! nunmap <buffer> <LocalLeader>cf'
+  endif
+  if !hasmapto('<Plug>(c3-vet)', 'n')
+    nmap <buffer> <silent> <LocalLeader>cv <Plug>(c3-vet)
+    let s:mapundo .= ' | silent! nunmap <buffer> <LocalLeader>cv'
+  endif
+endif
+
+let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! delcommand C3Vet | silent! autocmd! C3FormatOnSave * <buffer> | silent! nunmap <buffer> <Plug>(c3-format) | silent! nunmap <buffer> <Plug>(c3-vet)" . s:mapundo
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
