@@ -28,6 +28,9 @@ endif
 " Formatting command (:C3Format)
 command! -buffer -bar C3Format call c3#format#Format()
 
+" Linting command (:C3Vet), runs c3vet over the given paths (default: project)
+command! -buffer -bar -nargs=* -complete=file C3Vet call c3#vet#Vet(<q-args>)
+
 " Format on save (buffer-local b:c3_fmt_autosave overrides global g:c3_fmt_autosave)
 let s:autosave = get(b:, 'c3_fmt_autosave', get(g:, 'c3_fmt_autosave', get(g:, 'c3_format_on_save', 0)))
 if s:autosave
@@ -39,7 +42,7 @@ else
   silent! autocmd! C3FormatOnSave * <buffer>
 endif
 
-let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! autocmd! C3FormatOnSave * <buffer>"
+let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! delcommand C3Vet | silent! autocmd! C3FormatOnSave * <buffer>"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

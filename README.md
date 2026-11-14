@@ -10,6 +10,7 @@ Vim plugin for the [C3 Programming Language](https://c3-lang.org).
 - **Smart Indentation**: C-style bracket and control-flow indentation with support for `case`, `default`, `nextcase`, and doc contracts `<* ... *>`.
 - **Compiler Support (`:make`)**: Integrates with `c3c` and parses modern error/warning/note diagnostics into Vim's quickfix list (`file:line:col`).
 - **Code Formatting (`:C3Format`)**: Seamless formatting using `c3f` with optional format-on-save.
+- **Linting (`:C3Vet`)**: Runs [`c3vet`](https://github.com/konimarti/c3vet) and loads its findings into the quickfix list.
 
 ## Installation
 
@@ -46,6 +47,28 @@ Format-on-save can also be controlled per-buffer:
 
 ```vim
 let b:c3_fmt_autosave = 1
+```
+
+### Linting
+
+Lint the current project (or explicit paths) with the `:C3Vet` command, powered by [`c3vet`](https://github.com/konimarti/c3vet). Findings are loaded into the quickfix list.
+
+```vim
+" Lint the whole project (default)
+:C3Vet
+
+" Lint specific paths
+:C3Vet src/main.c3
+```
+
+Customize the linter command and options in your `.vimrc`:
+
+```vim
+" Customize the linter command (default: 'c3vet')
+let g:c3_vet_command = 'c3vet'
+
+" Pass additional options to the linter (default: '')
+let g:c3_vet_options = '--disable=float-equal'
 ```
 
 ### Compiler Settings (`:make`)
