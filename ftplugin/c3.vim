@@ -42,6 +42,17 @@ else
   silent! autocmd! C3FormatOnSave * <buffer>
 endif
 
+" Vet on save (buffer-local b:c3_vet_autosave overrides global g:c3_vet_autosave), off by default
+let s:vet_autosave = get(b:, 'c3_vet_autosave', get(g:, 'c3_vet_autosave', 0))
+if s:vet_autosave
+  augroup C3VetOnSave
+    autocmd! * <buffer>
+    autocmd BufWritePost <buffer> call c3#vet#Vet('')
+  augroup END
+else
+  silent! autocmd! C3VetOnSave * <buffer>
+endif
+
 " Key mappings, remap via <Plug>(c3-format)/<Plug>(c3-vet) or disable defaults
 " with let g:c3_no_mappings = 1
 nnoremap <buffer> <silent> <Plug>(c3-format) :C3Format<CR>
@@ -59,7 +70,7 @@ if !get(g:, 'c3_no_mappings', 0)
   endif
 endif
 
-let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! delcommand C3Vet | silent! autocmd! C3FormatOnSave * <buffer> | silent! nunmap <buffer> <Plug>(c3-format) | silent! nunmap <buffer> <Plug>(c3-vet)" . s:mapundo
+let b:undo_ftplugin = "setlocal comments< commentstring< formatoptions< suffixesadd< | silent! delcommand C3Format | silent! delcommand C3Vet | silent! autocmd! C3FormatOnSave * <buffer> | silent! autocmd! C3VetOnSave * <buffer> | silent! nunmap <buffer> <Plug>(c3-format) | silent! nunmap <buffer> <Plug>(c3-vet)" . s:mapundo
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
