@@ -28,7 +28,7 @@ endif
 " Formatting command (:C3Format)
 command! -buffer -bar C3Format call c3#format#Format()
 
-" Linting command (:C3Vet), runs c3vet over the given paths (default: project)
+" Linting command (:C3Vet), runs c3vet over the given paths (default: current file)
 command! -buffer -bar -nargs=* -complete=file C3Vet call c3#vet#Vet(<q-args>)
 
 " Format on save (buffer-local b:c3_fmt_autosave overrides global g:c3_fmt_autosave)

@@ -19,9 +19,17 @@ function! c3#vet#Vet(args) abort
   endif
 
   let l:options = get(g:, 'c3_vet_options', '')
+  let l:paths = a:args
+  if empty(l:paths) && !empty(expand('%'))
+    if &modified
+      silent update
+    endif
+    let l:paths = shellescape(expand('%:p'))
+  endif
+
   let l:full_cmd = l:cmd
         \ . (empty(l:options) ? '' : ' ' . l:options)
-        \ . (empty(a:args) ? '' : ' ' . a:args)
+        \ . (empty(l:paths) ? '' : ' ' . l:paths)
 
   let l:out = systemlist(l:full_cmd)
   let l:exit = v:shell_error
