@@ -31,12 +31,15 @@ function! c3#vet#Vet(args) abort
         \ . (empty(l:options) ? '' : ' ' . l:options)
         \ . (empty(l:paths) ? '' : ' ' . l:paths)
 
-  let l:out = systemlist(l:full_cmd)
+  let l:errfile = tempname()
+  let l:out = systemlist(l:full_cmd . ' 2>' . shellescape(l:errfile))
   let l:exit = v:shell_error
+  let l:err = filereadable(l:errfile) ? readfile(l:errfile) : []
+  call delete(l:errfile)
 
   if l:exit == 2
     echohl ErrorMsg
-    echomsg 'c3.vim: c3vet failed to run' . (empty(l:out) ? '' : ': ' . l:out[0])
+    echomsg 'c3.vim: c3vet failed to run' . (empty(l:err) ? (empty(l:out) ? '' : ': ' . l:out[0]) : ': ' . l:err[0])
     echohl None
     return
   endif
@@ -50,6 +53,9 @@ function! c3#vet#Vet(args) abort
   if empty(l:out)
     echomsg 'c3.vim: c3vet found no issues'
   else
+    if !empty(l:err)
+      echomsg 'c3.vim: ' . l:err[0]
+    endif
     botright copen
   endif
 endfunction
