@@ -11,6 +11,7 @@ Vim plugin for the [C3 Programming Language](https://c3-lang.org).
 - **Compiler Support (`:make`)**: Integrates with `c3c` and parses modern error/warning/note diagnostics into Vim's quickfix list (`file:line:col`).
 - **Code Formatting (`:C3Format`)**: Seamless formatting using `c3f` with optional format-on-save.
 - **Linting (`:C3Vet`)**: Runs [`c3vet`](https://github.com/konimarti/c3vet) and loads its findings into the quickfix list.
+- **Update Check (`:C3Update`)**: Compares the installed `c3c`, `c3f` and `c3vet` with their latest GitHub releases.
 
 ## Installation
 
@@ -70,6 +71,40 @@ let g:c3_vet_command = 'c3vet'
 " Pass additional options to the linter (default: '')
 let g:c3_vet_options = '--disable=float-equal'
 ```
+
+### Update Check
+
+Check whether newer releases of the C3 tools are available with the `:C3Update` command. It compares the installed version of each tool with the latest GitHub release:
+
+- [`c3c`](https://github.com/c3lang/c3c) (compiler)
+- [`c3f`](https://github.com/konimarti/c3f) (formatter)
+- [`c3vet`](https://github.com/konimarti/c3vet) (linter)
+
+```vim
+" Check all three tools (default)
+:C3Update
+
+" Check only some of them
+:C3Update c3f c3vet
+```
+
+Without `!`, `:C3Update` only reports. With `!`, it also replaces each outdated tool that is already installed with the latest release:
+
+```vim
+" Check, and install newer releases of outdated tools
+:C3Update!
+:C3Update! c3f
+```
+
+How the install works:
+- It downloads the release build for your platform (Linux x86_64 and macOS arm64, see the release pages for the exact assets).
+- It verifies the download against the release's `SHA256SUMS` when one is published. c3c does not publish checksums, so its download is not verified.
+- It checks that the new binary reports the expected version before anything is replaced.
+- The old binary is kept as `<path>.bak`.
+- Symlinked binaries are never replaced, so a dev build linked from elsewhere is left alone.
+- Tools that are not installed are not installed by `!`.
+
+`:C3Update` needs `curl` and network access. Installing also needs `tar` (or `unzip` for c3c on macOS) and `sha256sum` or `shasum`. Tools whose binary is not on your `PATH` are reported as not installed. If you point `g:c3_fmt_command` or `g:c3_vet_command` at a binary with a different name, that tool is skipped.
 
 ### Key Mappings
 
