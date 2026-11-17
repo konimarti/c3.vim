@@ -91,11 +91,11 @@ syntax match c3FunctionCall "\<[a-z_][0-9A-Z_a-z]*\>\ze\s*(" display
 
 " --- Strings, Chars & Data Literals ---
 syntax match c3Escape display contained /\\\([nrtabe0\\'"]\|x\x\{2}\|u\x\{4}\|U\x\{8}\)/
-syntax region c3String start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=c3Escape
+syntax region c3String start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=c3Escape oneline
 syntax region c3RawString start=+`+ end=+`+
 syntax region c3HexString start=+x"+ end=+"+ start=+x`+ end=+`+
 syntax region c3Base64String start=+b64"+ end=+"+ start=+b64`+ end=+`+
-syntax region c3Char start=+'+ skip=+\\\\\|\\'+ end=+'+ contains=c3Escape
+syntax region c3Char start=+'+ skip=+\\\\\|\\'+ end=+'+ contains=c3Escape oneline
 
 " --- Numbers ---
 syntax match c3Integer "\<[0-9][0-9_]*\%([uU]\|[uU]\=[lL]\{1,2\}\)\?\>" display
@@ -112,7 +112,10 @@ syntax region c3LineComment start=/\/\// end=/$/ contains=c3Todo,@Spell
 syntax region c3BlockComment matchgroup=c3BlockComment start="/\*" end="\*/" contains=c3BlockCommentNest,c3Todo,@Spell
 syntax region c3BlockCommentNest matchgroup=c3BlockComment start="/\*" end="\*/" contains=c3BlockCommentNest,c3Todo,@Spell contained transparent
 
-syntax region c3Contract matchgroup=c3ContractBoundary start="<\*" end="\*>" contains=c3DocTag,c3String,c3Char,c3Integer,c3Float,c3Hex,c3Bin,c3Oct,c3Todo,c3BlockCommentNest,c3BlockComment,@Spell
+" Contract text is prose, so quotes and backticks in it must not run past the line
+" (an apostrophe in "don't" would otherwise swallow everything up to the next ').
+syntax region c3ContractRawString start=+`+ end=+`+ oneline contained contains=NONE
+syntax region c3Contract matchgroup=c3ContractBoundary start="<\*" end="\*>" contains=c3DocTag,c3String,c3Char,c3ContractRawString,c3Integer,c3Float,c3Hex,c3Bin,c3Oct,c3Todo,c3BlockCommentNest,c3BlockComment,@Spell
 syntax match c3DocTag contained "@\<[a-zA-Z_][a-zA-Z0-9_]*\>" display
 
 " --- Highlight Links ---
@@ -195,6 +198,7 @@ highlight link c3Todo Todo
 highlight link c3LineComment Comment
 highlight link c3BlockComment Comment
 highlight link c3Contract Comment
+highlight link c3ContractRawString Comment
 highlight link c3ContractBoundary SpecialComment
 highlight link c3DocTag SpecialComment
 

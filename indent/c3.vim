@@ -36,7 +36,8 @@ function! GetC3Indent(lnum)
   endif
 
   " Increase indent after open brackets, contracts, or case labels
-  if prevline =~ '^\s*<[*]'
+  if prevline =~ '^\s*<[*]' && prevline !~ '\*>'
+    " Multi-line contract opened; a one-line "<* ... *>" does not indent
     let ind += &sw
   elseif prevline =~ '[({[]\s*$'
     let ind += &sw
